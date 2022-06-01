@@ -18,23 +18,45 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    
     - name: Setup dotnet
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: Set up dependency caching for faster builds
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+    
     - name: Install dependencies
       run: dotnet restore
       working-directory: src/demo-webapp
+    
     - name: Build
       run: dotnet build --configuration Release --no-restore
       working-directory: src/demo-webapp
+    
     - name: Test
       run: dotnet test --no-restore --verbosity normal
-      working-directory: src/demo-webapp
-    - name: use this action, test solution dir
+      working-directory: src/demo-webapp-test
+    
+    - name: Testing Report
       uses: zyborg/dotnet-tests-report@v1
       with:
         project_path: src/demo-webapp-test/demo-webapp-test.csproj
         report_name: demo-webapp-test-report
         report_title: Demo Webapp Test Report
         github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish
+      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/demo-webapp-release
+
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v3
+      with:
+        name: .net-app
+        path: ${{env.DOTNET_ROOT}}/demo-webapp-release
