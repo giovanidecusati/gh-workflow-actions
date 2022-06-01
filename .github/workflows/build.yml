@@ -70,7 +70,7 @@ jobs:
 
   deploy-staging:
     environment:
-      name: 'Development'
+      name: 'Staging'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       contents: none
