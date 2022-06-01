@@ -11,7 +11,7 @@ on:
 
 env:
   DOTNET_VERSION: '6.0.x'
-  AZURE_WEBAPP_NAME: ghworkflowactions
+  AZURE_WEBAPP_NAME: demo-ghworkflowactions
   AZURE_WEBAPP_PACKAGE_PATH: '.'
 
 jobs:
