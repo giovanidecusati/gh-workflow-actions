@@ -60,7 +60,7 @@ jobs:
 
     - name: Publish
       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/demo-webapp-release
-      working-directory: src/demo-webapp-test
+      working-directory: src/demo-webapp
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3      
