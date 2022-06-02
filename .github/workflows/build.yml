@@ -92,7 +92,12 @@ jobs:
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           slot-name: staging
 
-      - name: Set Web App ACR authentication
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set Web App Settings
         uses: Azure/appservice-settings@v1
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
@@ -143,7 +148,12 @@ jobs:
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           slot-name: production
 
-      - name: Set Web App ACR authentication
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set Web App Settings
         uses: Azure/appservice-settings@v1
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
