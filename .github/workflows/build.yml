@@ -151,7 +151,7 @@ jobs:
         uses: ./.github/actions/site-warmup-action
         with:
           authentication-token: ${{ secrets.WEBAPP_BEARER_AUTHENTICATION_TOKEN }}
-          url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+          url: ${{ steps.deploy-to-webapp.outputs.webapp-url.replace('http://','https://') }}
 
       - name: Get the output time
         run: echo "The response was ${{ steps.warmup.outputs.httpresponse }}"
@@ -206,7 +206,7 @@ jobs:
         uses: ./.github/actions/site-warmup-action
         with:
           authentication-token: ${{ secrets.WEBAPP_BEARER_AUTHENTICATION_TOKEN }}
-          url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+          url: ${{ steps.deploy-to-webapp.outputs.webapp-url.replace('http://','https://') }}
 
       - name: Get the output time
         run: echo "The response was ${{ steps.warmup.outputs.httpresponse }}"
@@ -261,7 +261,7 @@ jobs:
         uses: ./.github/actions/site-warmup-action
         with:
           authentication-token: ${{ secrets.WEBAPP_BEARER_AUTHENTICATION_TOKEN }}
-          url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+          url: ${{ steps.deploy-to-webapp.outputs.webapp-url.replace('http://','https://') }}
 
       - name: Get the output time
         run: echo "The response was ${{ steps.warmup.outputs.httpresponse }}"
