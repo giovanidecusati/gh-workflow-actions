@@ -87,13 +87,67 @@ jobs:
         name: .net-app
         path: ${{env.DOTNET_ROOT}}/demo-webapp-release
 
+  deploy-dev:
+    environment:
+      name: 'Development'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    runs-on: ubuntu-latest    
+    needs: build-and-test  
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: .net-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          slot-name: dev
+
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set Web App Settings
+        uses: Azure/appservice-settings@v1
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          app-settings-json: |
+            [
+              {
+                  "name": "MyAppSettingConiguration1",
+                  "value": "Development",
+                  "slotSetting": false
+              }
+            ]
+          slot-name: dev
+
+      # To use this repository's private action,
+      # you must check out the repository          
+      - uses: actions/checkout@v3
+
+      - name: Site warm up
+        id: warmup        
+        uses: ./.github/actions/site-warmup-action
+        with:
+          authentication-token: ${{ secrets.WEBAPP_BEARER_AUTHENTICATION_TOKEN }}
+          url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+      - name: Get the output time
+        run: echo "The response was ${{ steps.warmup.outputs.httpresponse }}"
+      
   deploy-staging:
     environment:
       name: 'Staging'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     runs-on: ubuntu-latest    
     needs: build-and-test  
-
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -126,6 +180,7 @@ jobs:
                  "slotSetting": false
              }
             ]
+          slot-name: staging
 
       # To use this repository's private action,
       # you must check out the repository          
@@ -147,7 +202,7 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     runs-on: ubuntu-latest    
     needs: deploy-staging
-
+    if: github.ref == 'refs/heads/master'
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -180,6 +235,7 @@ jobs:
                  "slotSetting": false
              }
             ]
+          slot-name: production
 
       # To use this repository's private action,
       # you must check out the repository          
