@@ -92,6 +92,19 @@ jobs:
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           slot-name: staging
 
+      - name: Set Web App ACR authentication
+        uses: Azure/appservice-settings@v1
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          app-settings-json: |
+          [
+             {
+                 "name": "MyAppSettingConiguration1",
+                 "value": "somevalueHere",
+                 "slotSetting": false
+             }
+          ]
+
       # To use this repository's private action,
       # you must check out the repository          
       - uses: actions/checkout@v3
@@ -104,7 +117,7 @@ jobs:
           url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
       - name: Get the output time
-        run: echo "The time was ${{ steps.warmup.outputs.httpresponse }}"
+        run: echo "The response was ${{ steps.warmup.outputs.httpresponse }}"
 
   deploy-production:
     environment:
@@ -130,6 +143,19 @@ jobs:
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           slot-name: production
 
+      - name: Set Web App ACR authentication
+        uses: Azure/appservice-settings@v1
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          app-settings-json: |
+          [
+             {
+                 "name": "MyAppSettingConiguration1",
+                 "value": "somevalueHere",
+                 "slotSetting": false
+             }
+          ]
+
       # To use this repository's private action,
       # you must check out the repository          
       - uses: actions/checkout@v3
@@ -142,4 +168,4 @@ jobs:
           url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
       
       - name: Get the output time
-        run: echo "The time was ${{ steps.warmup.outputs.httpresponse }}"
+        run: echo "The response was ${{ steps.warmup.outputs.httpresponse }}"
