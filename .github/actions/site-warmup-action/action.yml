@@ -1,0 +1,19 @@
+name: site-warmup-action
+author: giovanidecusati
+description: 'post a request to web app initialisation'
+
+inputs:
+  authentication-token:
+    description: 'A bearer token to be sent through the request'
+    required: true
+  url:
+    description: 'Url to post a request'
+    required: true
+
+outputs:
+  httpresponse:
+    description: 'HTTP response object contenting code and description'
+
+runs:
+  using: node12
+  main: "dist/index.js"
