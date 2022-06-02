@@ -7,6 +7,7 @@ try {
     const authenticationToken = core.getInput('authentication-token');
     console.log(`authentication-token: ${authenticationToken}!`);
 
+    // `url` input defined in action metadata file
     const url = core.getInput('url');
     console.log(`url: ${url}!`);
 
