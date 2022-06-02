@@ -94,7 +94,7 @@ jobs:
 
       - name: Site warm up
         id: warmup        
-        uses: ./.github/actions/site-warmup-action
+        uses: ./.github/actions/site-warmup-action.yml
         # giovanidecusati/gh-workflow-actions@site-warmup-action
         with:
           authentication-token: ${{ secrets.WEBAPP_BEARER_AUTHENTICATION_TOKEN }}
@@ -129,7 +129,7 @@ jobs:
           
       - name: Site warm up
         id: warmup
-        uses: ./.github/actions/site-warmup-action
+        uses: ./.github/actions/site-warmup-action.yml
         with:
           authentication-token: ${{ secrets.WEBAPP_BEARER_AUTHENTICATION_TOKEN }}
           url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
