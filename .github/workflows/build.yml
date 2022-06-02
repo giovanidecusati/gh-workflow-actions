@@ -86,6 +86,10 @@ jobs:
       with:
         name: .net-app
         path: ${{env.DOTNET_ROOT}}/demo-webapp-release
+    
+    - name: chuck-norris-quote-action-html
+      id: htmlchuck
+      uses: glav/chuck-norris-quote@v1.0
 
   deploy-dev:
     environment:
