@@ -93,10 +93,14 @@ jobs:
           slot-name: staging
 
       - name: Site warm up
-        uses: ./site-warmup-action
+        id: warmup
+        uses: giovanidecusati/gh-workflow-actions/actions/site-warmup-action
         with:
           authentication-token: ${{ secrets.WEBAPP_BEARER_AUTHENTICATION_TOKEN }}
           url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+      - name: Get the output time
+        run: echo "The time was ${{ steps.warmup.outputs.httpresponse }}"
 
   deploy-production:
     environment:
@@ -123,7 +127,11 @@ jobs:
           slot-name: production
           
       - name: Site warm up
-        uses: giovanidecusati/gh-workflow-actions@site-warmup-action
+        id: warmup
+        uses: giovanidecusati/gh-workflow-actions/actions/site-warmup-action
         with:
           authentication-token: ${{ secrets.WEBAPP_BEARER_AUTHENTICATION_TOKEN }}
           url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      
+      - name: Get the output time
+        run: echo "The time was ${{ steps.warmup.outputs.httpresponse }}"
