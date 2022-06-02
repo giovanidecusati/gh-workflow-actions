@@ -92,13 +92,11 @@ jobs:
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           slot-name: staging
 
+      - uses: actions/checkout@v1
+
       - name: Site warm up
         id: warmup        
-        uses: .github/actions/site-warmup-action/action.yml
-        # ./actions/site-warmup-action/action.yml
-        # giovanidecusati/gh-workflow-actions/site-warmup-action
-        # actions/site-warmup-action.yml
-        # giovanidecusati/gh-workflow-actions/site-warmup-action
+        uses: ./.github/actions/site-warmup-action/action.yml
         with:
           authentication-token: ${{ secrets.WEBAPP_BEARER_AUTHENTICATION_TOKEN }}
           url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -130,9 +128,11 @@ jobs:
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           slot-name: production
           
+      - uses: actions/checkout@v1
+      
       - name: Site warm up
-        id: warmup
-        uses: .github/actions/site-warmup-action/action.yml
+        id: warmup        
+        uses: ./.github/actions/site-warmup-action/action.yml
         with:
           authentication-token: ${{ secrets.WEBAPP_BEARER_AUTHENTICATION_TOKEN }}
           url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
