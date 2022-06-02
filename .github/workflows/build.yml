@@ -103,7 +103,8 @@ jobs:
       - run: echo 'The triggering workflow failed'
 
   deploy-dev:
-    if: ${{ !contains(github.ref, 'refs/heads/main', 'refs/pull') }}
+    # If the condition statement is started with "!"  ( Not ), the expression syntax " ${{ }} " can’t be omitted.
+    if: "${{ !contains(github.ref, 'refs/heads/main', 'refs/pull') }}"
     environment:
       name: "Development"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
