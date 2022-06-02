@@ -103,6 +103,7 @@ jobs:
       - run: echo 'The triggering workflow failed'
 
   deploy-dev:
+    if: ! contains(github.ref, 'refs/heads/main', 'refs/pull')
     environment:
       name: "Development"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
