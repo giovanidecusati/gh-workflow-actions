@@ -4,6 +4,24 @@ name: build and test
 
 on:
   workflow_dispatch:
+    inputs:
+      optionField:
+        description: 'Log level'     
+        required: true
+        default: 'warning' 
+        type: choice
+        options:
+        - info
+        - warning
+        - debug 
+      booleanField:
+        description: 'Test scenario tags'
+        required: false 
+        type: boolean
+      environmentField:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true 
   push:
   pull_request:
     branches: [ main ]
