@@ -103,7 +103,7 @@ jobs:
       - run: echo 'The triggering workflow failed'
 
   deploy-dev:
-    if: ! contains(github.ref, 'refs/heads/main', 'refs/pull')
+    if: ${{ !contains(github.ref, 'refs/heads/main', 'refs/pull') }}
     environment:
       name: "Development"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -158,7 +158,7 @@ jobs:
         run: echo "The response was ${{ steps.warmup.outputs.httpresponse }}"
 
   deploy-staging:
-    if: github.ref == 'refs/heads/main'
+    if: ${{ github.ref == 'refs/heads/main' }}
     environment:
       name: "Staging"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -218,7 +218,7 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     runs-on: ubuntu-latest
     needs: deploy-staging
-    if: github.ref == 'refs/heads/main'
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
