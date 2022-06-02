@@ -97,13 +97,13 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           app-settings-json: |
-          [
+            [
              {
                  "name": "MyAppSettingConiguration1",
                  "value": "somevalueHere",
                  "slotSetting": false
              }
-          ]
+            ]
 
       # To use this repository's private action,
       # you must check out the repository          
@@ -148,13 +148,13 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           app-settings-json: |
-          [
+           [
              {
                  "name": "MyAppSettingConiguration1",
                  "value": "somevalueHere",
                  "slotSetting": false
              }
-          ]
+            ]
 
       # To use this repository's private action,
       # you must check out the repository          
