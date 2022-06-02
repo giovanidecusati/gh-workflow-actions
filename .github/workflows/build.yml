@@ -92,6 +92,12 @@ jobs:
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
           slot-name: staging
 
+      - name: Site warm up
+      uses: giovanidecusati/site-warmup-action
+      with:
+        authentication-token: ${{ secrets.WEBAPP_BEARER_AUTHENTICATION_TOKEN }}
+        url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
   deploy-production:
     environment:
       name: 'Production'

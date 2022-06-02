@@ -1,13 +1,13 @@
-name: check-secrets-action
-author: mattdavis0351
-description: validation action for this lab
+name: site-warmup-action
+author: giovanidecusati
+description: post a request to web app initialisation
 
 inputs:
-  your-secret:
-    description: A Personal Access Token with the repo scope stored as a secret
+  authentication-token:
+    description: A bearer token to be sent through the request
     required: true
-  secrets-context:
-    description: The GitHub Actions secrets context object
+  url:
+    description: Site's url to post a request
     required: true
 
 runs:
