@@ -93,8 +93,9 @@ jobs:
           slot-name: staging
 
       - name: Site warm up
-        id: warmup
-        uses: giovanidecusati/gh-workflow-actions/actions/site-warmup-action
+        id: warmup        
+        uses: ./actions/site-warmup-action
+        # giovanidecusati/gh-workflow-actions@site-warmup-action
         with:
           authentication-token: ${{ secrets.WEBAPP_BEARER_AUTHENTICATION_TOKEN }}
           url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
@@ -128,7 +129,7 @@ jobs:
           
       - name: Site warm up
         id: warmup
-        uses: giovanidecusati/gh-workflow-actions/actions/site-warmup-action
+        uses: ./actions/site-warmup-action
         with:
           authentication-token: ${{ secrets.WEBAPP_BEARER_AUTHENTICATION_TOKEN }}
           url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
