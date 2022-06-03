@@ -104,7 +104,7 @@ jobs:
 
   deploy-dev:
     # If the condition statement is started with "!"  ( Not ), the expression syntax " ${{ }} " can’t be omitted.
-    if: "!contains(github.ref, 'refs/heads/main', 'refs/pull')"
+    if: "!(contains(github.ref, 'refs/heads/main') || contains(github.ref, 'refs/pull'))"
     environment:
       name: "Development"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
